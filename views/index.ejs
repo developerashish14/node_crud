@@ -1,0 +1,55 @@
+<%- include('layout/header') %>
+
+<% if(message.length>0){ %>
+<%=message %>
+  <% } %>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Image</th>
+        <th scope="col">Name</th>
+        <th scope="col">E-mail</th>
+        <th scope="col">Phone</th>
+        <th scope="col">action</th>
+        <th scope="col">send mail</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if(user_data != ''){
+        user_data.forEach((row,index)=>{
+        %>
+      <tr class="align-middle">
+        <th scope="row"><%= index %></th>
+        <td><img src="<%= row.image %>" width="50" class="img-thumbnail"></td>
+        <td><%=row.name%></td>
+        <td><%=row.email%></td>
+        <td><%=row.phone%></td>
+        <td>
+          <a href="/edit/<%= row._id %>" class="text-success">
+            <i class="fa fa-edit" style="font-size:24px;color:rgb(17, 248, 121)"></i></a>
+          <a href="/delete/<%=row._id%>" class="text-danger"><i class="fa fa-trash" style="font-size:24px;color:red"></i></a>
+        </td>
+        <td>
+          <a href="/send_mail/<%=row.email%>" class="text-danger">send</a>
+        </td>
+      </tr>
+      <%
+        })
+    }else{ %>
+        <tr>No user found</tr>
+        <% } %>
+    </tbody>
+  </table>
+
+  <script>
+    $(document).ready(function(){
+        $("table").DataTable({
+          order:[0,'desc']
+        });
+    });
+
+  </script>
+
+</body>
+</html>
